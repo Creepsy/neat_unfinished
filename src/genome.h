@@ -1,10 +1,23 @@
 #pragma once
 
+#include <map>
+#include <vector>
+
+struct connection
+{
+    size_t from;
+    size_t to;
+    size_t inno;
+    double weight;
+};
+
 class genome
 {
 private:
-    /* data */
+    std::map<size_t, std::vector<connection>> connections;
+
 public:
-    genome(/* args */);
+    genome();
     ~genome();
+    void add_connection(size_t from, size_t to);
 };
