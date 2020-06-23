@@ -44,6 +44,5 @@ std::vector<double> genome::run(const std::vector<double>& inputs) {
 
     }
 }
-}
 
 genome::~genome() {}
