@@ -19,5 +19,5 @@ private:
 public:
     genome();
     ~genome();
-    void add_connection(const connection& c);
+    void add_connection(const connection &c);
 };
