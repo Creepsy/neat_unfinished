@@ -1,7 +1,7 @@
 CLFAGS=-g -O3
 LDFLAGS=-O4
 
-build/test: src/test.o build/libneat.so
+build/test: build/test.o build/libneat.so
 	g++ build/test.o -o build/test -Lbuild -lneat $(LDFLAGS)
 
 build/test.o: src/test.cpp
