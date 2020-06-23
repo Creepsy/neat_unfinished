@@ -15,7 +15,7 @@ class genome
 {
 private:
     std::map<size_t, std::vector<connection>> connections;
-    std::map<size_t, std::vector<size_t>> out_in_map;
+    std::map<size_t, std::vector<connection>> reverse_connections;
     size_t input_size, output_size;
 
 public:
