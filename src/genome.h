@@ -15,9 +15,11 @@ class genome
 {
 private:
     std::map<size_t, std::vector<connection>> connections;
+    size_t input_size, output_size;
 
 public:
-    genome();
+    genome(size_t input_size, size_t outputs);
     ~genome();
     void add_connection(const connection &c);
+    std::vector<double> run(std::vector<double> &inputs);
 };
