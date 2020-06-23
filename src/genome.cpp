@@ -16,10 +16,8 @@ size_t genome::get_output_id(size_t output)
     return output << 24;
 }
 
-genome::genome(size_t input_size, size_t output_size)
+genome::genome(size_t input_size, size_t output_size): input_size(input_size), output_size(output_size)
 {
-    this->input_size = input_size;
-    this->output_size = output_size;
     size_t inno = 0;
     for (size_t input = 0; input < input_size; input++)
     {
@@ -35,6 +33,17 @@ void genome::add_connection(const connection &c)
 {
     this->connections[c.from].push_back(c);
     this->out_in_map[c.to].push_back(c.from);
+}
+
+std::vector<double> genome::run(const std::vector<double>& inputs) {
+    if(this -> input_size != inputs.size()) throw std::runtime_error("Input size doesn't match! Recieved: " + std::to_string(inputs.size())
+                                                                 + ", Expected: " + std::to_string(this -> input_size));
+    
+    for(int i = 0; i < this -> input_size; i++) {
+        const std::vector<connection>& connected_to = this -> connections.at(this -> get_input_id(i));
+
+    }
+}
 }
 
 genome::~genome() {}
