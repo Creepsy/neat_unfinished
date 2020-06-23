@@ -4,7 +4,7 @@
 #include <random>
 
 std::default_random_engine generator;
-std::uniform_int_distribution<double> distribution(0.0, 1.0);
+std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
 size_t genome::get_input_id(size_t input)
 {
