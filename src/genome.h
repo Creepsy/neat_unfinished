@@ -24,5 +24,5 @@ public:
     void add_connection(const connection &c);
     size_t get_input_id(size_t input);
     size_t get_output_id(size_t output);
-    std::vector<double> run(std::vector<double> &inputs);
+    std::vector<double> run(const std::vector<double> &inputs);
 };
