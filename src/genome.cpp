@@ -23,7 +23,7 @@ genome::genome(size_t input_size, size_t output_size): input_size(input_size), o
     {
         for (size_t output = 0; output < output_size; output++)
         {
-            this->add_connection(connection{input, output, inno, distribution(generator)});
+            this->add_connection(connection{this->get_input_id(input), this->get_output_id(output), inno, distribution(generator)});
             inno++;
         }
     }
