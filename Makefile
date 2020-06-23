@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 CLFAGS=-g -Wall
+=======
+CLFAGS=-g 
+>>>>>>> 1271133ce8d1afb5f44ecd4efe469ec6e932aaaf
 LDFLAGS=
 
 build/test: build/test.o build/libneat.so
