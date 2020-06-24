@@ -23,8 +23,8 @@ genome::genome(size_t input_size, size_t output_size) : input_size(input_size), 
 void genome::add_connection(const connection &c)
 {
     // add a connection (and a reverse connection for recursively evaluating the network value later on)
-    this->connections[c.from].push_back(c);
-    this->reverse_connections[c.to].push_back(c);
+    this->connections[c.from][c.to] = c;
+    this->reverse_connections[c.to][c.from] = c;
 }
 
 double genome::compute_node_result(size_t node, const std::vector<double> &inputs)
