@@ -2,7 +2,7 @@
 #include <vector>
 
 template <typename T>
-std::ostream &print_vector(const std::ostream &os, const std::vector<T> &vector)
+std::ostream &print_vector(std::ostream &os, const std::vector<T> &vector)
 {
     std::cout << "[";
     for (size_t i = 0; i < vector.size(); i++)
