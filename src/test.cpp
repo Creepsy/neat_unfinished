@@ -12,11 +12,13 @@ int main(int argc, char const *argv[])
         innovations innos;
         genome g = genome(4, 4, sigmoid, innos);
         genome g2 = genome(4, 4, sigmoid, innos);
-        g2.split_connection(3, 6, innos);
-        g.split_connection(3, 6, innos);
-        g.split_connection(1, 6, innos);
+        for (int i = 0; i < 1000; i++)
+        {
+            g.mutate(innos);
+            g2.mutate(innos);
+        }
 
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < 10000; i++)
         {
             auto outputs = g.run({1.0, 2.0, 3.0, 4.0});
             auto outputs2 = g2.run({1.0, 2.0, 3.0, 4.0});

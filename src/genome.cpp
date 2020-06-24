@@ -48,7 +48,7 @@ double genome::compute_node_result(size_t node, const std::vector<double> &input
     else
     {
         // get all the incoming connections, multiply the source node values with the connection weight and sum them up
-        auto node_connections = this->reverse_connections.at(node);
+        auto &node_connections = this->reverse_connections.at(node);
         double inputs_summed = 0.0;
         for (auto &n : node_connections)
         {
@@ -78,13 +78,28 @@ std::vector<double> genome::run(const std::vector<double> &inputs)
     return results;
 }
 
-void genome::mutate()
+void genome::mutate(innovations &innos)
 {
     this->mutate_weights();
 
+    //with a 5% chance, split a random connection
     if (distribution(generator) <= 0.05)
     {
-        //this -> split_connection();
+        // get from-node
+        auto it = this->connections.begin();
+        std::uniform_int_distribution<size_t> conns_rand(0, this->connections.size() - 1);
+        std::advance(it, conns_rand(generator));
+        size_t from = it->first;
+
+        // list of possible to-nodes
+        auto &from_connections = this->connections.at(from);
+
+        // get to-node
+        auto from_it = from_connections.begin();
+        std::uniform_int_distribution<size_t> from_rand(0, from_connections.size() - 1);
+        std::advance(from_it, from_rand(generator));
+        size_t to = 5; //from_it->first;
+        this->split_connection(from, to, innos);
     }
 }
 
