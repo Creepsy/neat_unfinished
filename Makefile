@@ -15,3 +15,6 @@ build/lib.o: src/lib.cpp src/lib.h
 
 build/genome.o: src/genome.cpp src/genome.h
 	g++ -c src/genome.cpp -o build/genome.o $(CFLAGS)
+
+build/innovations.o: src/innovations.cpp src/innovations.h
+	g++ -c src/innovations.cpp -o build/innovations.o $(CFLAGS)

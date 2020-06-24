@@ -30,6 +30,8 @@ void genome::add_connection(const connection &c)
 
 void genome::add_connection(size_t from, size_t to)
 {
+    // TODO: add unique nnovation number
+    this -> add_connection(connection{from, to, -1, distribution(generator)});
 }
 
 double genome::compute_node_result(size_t node, const std::vector<double> &inputs)
