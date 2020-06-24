@@ -14,6 +14,8 @@ struct connection
 
 typedef double(*activation_t)(double);
 
+class innovations;
+
 class genome
 {
 private:
@@ -33,4 +35,6 @@ public:
     void mutate();
     void mutate_weights();
     void split_connection(size_t from, size_t to);
+
+    friend innovations;
 };
