@@ -84,6 +84,19 @@ void genome::mutate()
 
 void genome::mutate_weights()
 {
+    // change the weights 80% of the time
+    if(distribution(generator) <= 0.8) {
+        for(auto& from_pair : this -> connections) {
+            for(auto& to_pair : from_pair.second) {
+                // 90% to change the weight slightly, otherwise assign a completly new value
+                if(distribution(generator) <= 0.9) {
+                    to_pair.second.weight += (distribution(generator) - 0.5) / 10;
+                } else {
+                    to_pair.second.weight = distribution(generator);
+                }
+            }
+        }
+    }
 }
 
 void genome::split_connection(size_t from, size_t to, innovations &innos)
