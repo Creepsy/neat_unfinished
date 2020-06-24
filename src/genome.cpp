@@ -6,7 +6,7 @@
 std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
-genome::genome(size_t input_size, size_t output_size, activation_t activation, innovations &innos) : input_size(input_size), output_size(output_size), hidden_size(0)
+genome::genome(size_t input_size, size_t output_size, activation_t activation, innovations &innos) : input_size(input_size), output_size(output_size), hidden_size(0), activation(activation)
 {
     // connect every input with every output and assign a unique innovation-number to each
     for (size_t input = 0; input < input_size; input++)
@@ -28,7 +28,8 @@ void genome::add_connection(const connection &c)
 void genome::add_connection(size_t from, size_t to, innovations &innos)
 {
     // TODO: add unique nnovation number
-    this->add_connection(connection{from, to, innos.get_innovation(from, to, this->compute_identifier()), distribution(generator)});
+    size_t innovation_num = innos.get_innovation(from, to, this->compute_identifier());
+    this->add_connection(connection{from, to, innovation_num, distribution(generator)});
 }
 
 void genome::disable_connection(size_t from, size_t to)
@@ -97,18 +98,27 @@ void genome::split_connection(size_t from, size_t to, innovations &innos)
 
 genome::~genome() {}
 
+inline size_t hash(size_t h, size_t x)
+{
+    for (size_t i = 0; i < sizeof(size_t); i++)
+    {
+        h ^= x & 255;
+        x >>= 8;
+        h = (h << 24) + h * 0x193;
+    }
+    return h;
+}
+
 size_t genome::compute_identifier()
 {
     // compute a value uniquely representing the connections of the genome
-    size_t result = 0;
-    std::hash<size_t> hash;
+    size_t result = -1;
     for (auto &from_pair : this->connections)
     {
         for (auto &to_pair : from_pair.second)
         {
-            result ^= hash(to_pair.second.inno);
+            result = hash(result, to_pair.second.inno);
         }
     }
-    std::cout << result << std::endl;
     return result;
 }

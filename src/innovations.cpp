@@ -1,7 +1,6 @@
 #include "innovations.h"
 
 #include <iostream>
-#include <functional>
 
 innovations::innovations() : next_innovation(1) {}
 
