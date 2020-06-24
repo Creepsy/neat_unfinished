@@ -13,7 +13,7 @@ genome::genome(size_t input_size, size_t output_size, activation_t activation, i
     {
         for (size_t output = 0; output < output_size; output++)
         {
-            this->add_connection(input, output + input_size, innos);
+            this->add_connection(input, output + input_size, distribution(generator), innos);
         }
     }
 }
@@ -25,11 +25,11 @@ void genome::add_connection(const connection &c)
     this->reverse_connections[c.to][c.from] = c;
 }
 
-void genome::add_connection(size_t from, size_t to, innovations &innos)
+void genome::add_connection(size_t from, size_t to, double weight, innovations &innos)
 {
     // TODO: add unique nnovation number
     size_t innovation_num = innos.get_innovation(from, to, this->compute_identifier());
-    this->add_connection(connection{from, to, innovation_num, distribution(generator)});
+    this->add_connection(connection{from, to, innovation_num, weight});
 }
 
 void genome::disable_connection(size_t from, size_t to)
@@ -47,8 +47,8 @@ double genome::compute_node_result(size_t node, const std::vector<double> &input
     }
     else
     {
-        // get all the incoming connections, multiply the source node values with the connection weight and sum them up (activation function missing)
-        auto &node_connections = this->reverse_connections.at(node);
+        // get all the incoming connections, multiply the source node values with the connection weight and sum them up
+        auto node_connections = this->reverse_connections.at(node);
         double inputs_summed = 0.0;
         for (auto &n : node_connections)
         {
@@ -80,10 +80,35 @@ std::vector<double> genome::run(const std::vector<double> &inputs)
 
 void genome::mutate()
 {
+    this->mutate_weights();
+
+    if (distribution(generator) <= 0.05)
+    {
+        //this -> split_connection();
+    }
 }
 
 void genome::mutate_weights()
 {
+    // change the weights 80% of the time
+    if (distribution(generator) <= 0.8)
+    {
+        for (auto &from_pair : this->connections)
+        {
+            for (auto &to_pair : from_pair.second)
+            {
+                // 90% to change the weight slightly, otherwise assign a completly new value
+                if (distribution(generator) <= 0.9)
+                {
+                    to_pair.second.weight += (distribution(generator) - 0.5) / 10;
+                }
+                else
+                {
+                    to_pair.second.weight = distribution(generator);
+                }
+            }
+        }
+    }
 }
 
 void genome::split_connection(size_t from, size_t to, innovations &innos)
@@ -92,8 +117,8 @@ void genome::split_connection(size_t from, size_t to, innovations &innos)
     size_t hidden_id = this->input_size + this->output_size + this->hidden_size;
     this->hidden_size++;
     this->disable_connection(from, to);
-    this->add_connection(from, hidden_id, innos);
-    this->add_connection(hidden_id, to, innos);
+    this->add_connection(from, hidden_id, 1, innos);
+    this->add_connection(hidden_id, to, this->connections.at(from).at(to).weight, innos);
 }
 
 genome::~genome() {}
