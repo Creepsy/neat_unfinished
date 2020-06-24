@@ -41,7 +41,7 @@ double genome::compute_node_result(size_t node, const std::vector<double> &input
         double inputs_summed = 0.0;
         for (auto n : node_connections)
         {
-            inputs_summed += n.weight * this->compute_node_result(n.from, inputs);
+            inputs_summed += n.second.weight * this->compute_node_result(n.second.from, inputs);
         }
         return inputs_summed;
     }
@@ -62,6 +62,22 @@ std::vector<double> genome::run(const std::vector<double> &inputs)
         results.at(output) = this->compute_node_result(true_output_id, inputs);
     }
     return results;
+}
+
+void genome::mutate() {
+
+}
+
+void genome::mutate_weights() {
+
+}
+
+void genome::split_connection(const size_t& from, const size_t& to) {
+
+}
+
+void genome::connect(const size_t& first_node, const size_t& second_node) {
+    
 }
 
 genome::~genome() {}
