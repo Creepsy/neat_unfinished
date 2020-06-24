@@ -1,5 +1,7 @@
 #pragma once
 
+#include "innovations.h"
+
 #include <map>
 #include <vector>
 
@@ -12,7 +14,7 @@ struct connection
     bool enabled = true;
 };
 
-typedef double(*activation_t)(double);
+typedef double (*activation_t)(double);
 
 class genome
 {
@@ -23,10 +25,10 @@ private:
     activation_t activation;
 
 public:
-    genome(size_t input_size, size_t outputs, activation_t activation);
+    genome(size_t input_size, size_t outputs, activation_t activation, innovations &innos);
     ~genome();
     void add_connection(const connection &c);
-    void add_connection(size_t from, size_t to);
+    void add_connection(size_t from, size_t to, innovations &innos);
     void disable_connection(size_t from, size_t to);
     std::vector<double> run(const std::vector<double> &inputs);
     double compute_node_result(size_t node, const std::vector<double> &inputs);

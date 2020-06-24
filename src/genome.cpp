@@ -6,16 +6,14 @@
 std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
-genome::genome(size_t input_size, size_t output_size, activation_t activation) : input_size(input_size), output_size(output_size), hidden_size(0)
+genome::genome(size_t input_size, size_t output_size, activation_t activation, innovations &innos) : input_size(input_size), output_size(output_size), hidden_size(0)
 {
     // connect every input with every output and assign a unique innovation-number to each
-    size_t inno = 1;
     for (size_t input = 0; input < input_size; input++)
     {
         for (size_t output = 0; output < output_size; output++)
         {
-            this->add_connection(connection{input, output + input_size, inno, distribution(generator)});
-            inno++;
+            this->add_connection(input, output + input_size, innos);
         }
     }
 }
@@ -27,10 +25,10 @@ void genome::add_connection(const connection &c)
     this->reverse_connections[c.to][c.from] = c;
 }
 
-void genome::add_connection(size_t from, size_t to)
+void genome::add_connection(size_t from, size_t to, innovations &innos)
 {
     // TODO: add unique nnovation number
-    this->add_connection(connection{from, to, 0, distribution(generator)});
+    this->add_connection(connection{from, to, innos.get_innovation(from, to, this->compute_identifier()), distribution(generator)});
 }
 
 void genome::disable_connection(size_t from, size_t to)
