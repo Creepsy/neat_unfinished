@@ -8,7 +8,8 @@ struct connection
     size_t from;
     size_t to;
     size_t inno;
-    double weight;
+    double weight = 0;
+    bool enabled = true;
 };
 
 class genome
