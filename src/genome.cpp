@@ -6,7 +6,8 @@
 std::default_random_engine generator;
 std::uniform_real_distribution<double> distribution(0.0, 1.0);
 
-genome::genome(size_t input_size, size_t output_size) : input_size(input_size), output_size(output_size)
+genome::genome(size_t input_size, size_t output_size, activation_t activation) : 
+    input_size(input_size), output_size(output_size), activation(activation)
 {
     // connect every input with every output and assign a unique innovation-number to each
     size_t inno = 1;
@@ -50,7 +51,7 @@ double genome::compute_node_result(size_t node, const std::vector<double> &input
                 inputs_summed += n.second.weight * this->compute_node_result(n.second.from, inputs);
             }
         }
-        return activation(inputs_summed);
+        return this -> activation(inputs_summed);
     }
 }
 

@@ -12,7 +12,7 @@ struct connection
     bool enabled = true;
 };
 
-double activation(double value);
+typedef double(*activation_t)(double);
 
 class genome
 {
@@ -20,9 +20,10 @@ private:
     std::map<size_t, std::map<size_t, connection>> connections;
     std::map<size_t, std::map<size_t, connection>> reverse_connections;
     size_t input_size, output_size;
+    activation_t activation;
 
 public:
-    genome(size_t input_size, size_t outputs);
+    genome(size_t input_size, size_t outputs, activation_t activation);
     ~genome();
     void add_connection(const connection &c);
     void add_connection(size_t from, size_t to);
