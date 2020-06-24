@@ -27,6 +27,10 @@ void genome::add_connection(const connection &c)
     this->reverse_connections[c.to][c.from] = c;
 }
 
+void genome::add_connection(size_t from, size_t to)
+{
+}
+
 double genome::compute_node_result(size_t node, const std::vector<double> &inputs)
 {
     if (node < this->input_size)
@@ -64,20 +68,16 @@ std::vector<double> genome::run(const std::vector<double> &inputs)
     return results;
 }
 
-void genome::mutate() {
-
+void genome::mutate()
+{
 }
 
-void genome::mutate_weights() {
-
+void genome::mutate_weights()
+{
 }
 
-void genome::split_connection(const size_t& from, const size_t& to) {
-
-}
-
-void genome::connect(const size_t& first_node, const size_t& second_node) {
-    
+void genome::split_connection(size_t from, size_t to)
+{
 }
 
 genome::~genome() {}
