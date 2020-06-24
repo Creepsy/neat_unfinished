@@ -7,8 +7,8 @@ build/test: build/test.o build/libneat.a
 build/test.o: src/test.cpp src/util.h src/genome.h
 	g++ -c src/test.cpp -o build/test.o $(CFLAGS) 
 
-build/libneat.a: build/lib.o build/genome.o
-	ar crf build/libneat.a build/lib.o build/genome.o $(LDFLAGS)
+build/libneat.a: build/lib.o build/genome.o build/innovations.o
+	ar crf build/libneat.a build/lib.o build/genome.o build/innovations.o $(LDFLAGS)
 
 build/lib.o: src/lib.cpp src/lib.h
 	g++ -c src/lib.cpp -o build/lib.o $(CFLAGS)

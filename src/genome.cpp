@@ -30,7 +30,7 @@ void genome::add_connection(const connection &c)
 void genome::add_connection(size_t from, size_t to)
 {
     // TODO: add unique nnovation number
-    this -> add_connection(connection{from, to, -1, distribution(generator)});
+    this->add_connection(connection{from, to, 0, distribution(generator)});
 }
 
 void genome::disable_connection(size_t from, size_t to)
@@ -89,10 +89,12 @@ void genome::mutate_weights()
 
 void genome::split_connection(size_t from, size_t to)
 {
+    // disable an existing connection and create a connected node at it's place
     size_t hidden_id = this->input_size + this->output_size + this->hidden_size;
     this->hidden_size++;
     this->disable_connection(from, to);
-    // TODO: this->add_connection()
+    this->add_connection(from, hidden_id);
+    this->add_connection(hidden_id, to);
 }
 
 genome::~genome() {}
