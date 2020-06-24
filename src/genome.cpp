@@ -48,9 +48,9 @@ double genome::compute_node_result(size_t node, const std::vector<double> &input
     else
     {
         // get all the incoming connections, multiply the source node values with the connection weight and sum them up (activation function missing)
-        auto node_connections = this->reverse_connections.at(node);
+        auto &node_connections = this->reverse_connections.at(node);
         double inputs_summed = 0.0;
-        for (auto n : node_connections)
+        for (auto &n : node_connections)
         {
             if (n.second.enabled)
             {

@@ -2,7 +2,7 @@ CFLAGS=-g -Wall
 LDFLAGS=
 
 build/test: build/test.o build/libneat.a
-	g++ build/test.o -o build/test -Lbuild -lneat $(LDFLAGS)
+	g++ build/test.o -o build/test -Lbuild -lneat -lprofiler $(LDFLAGS)
 
 build/test.o: src/test.cpp src/util.h src/genome.h
 	g++ -c src/test.cpp -o build/test.o $(CFLAGS) 
