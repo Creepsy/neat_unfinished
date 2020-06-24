@@ -1,12 +1,14 @@
 #pragma once
 
 #include <map>
-#include <vector>
 #include <functional>
 
+#include "genome.h"
+
 struct innovation {
+    size_t from;
+    size_t to;
     size_t identifier;
-    size_t inno;
 };
 
 class innovations
@@ -14,9 +16,10 @@ class innovations
 private:
     size_t next_innovation;
 
-    std::map<std::pair<size_t, size_t>, innovation> existing_innovations;
+    std::map<innovation, size_t> existing_innovations;
 public:
     innovations();
     size_t get_innovation(size_t from_node, size_t to_node, size_t identifier);
+    size_t compute_identifier(const genome& g);
     ~innovations();
 };
