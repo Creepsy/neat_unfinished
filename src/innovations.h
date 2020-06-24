@@ -1,9 +1,6 @@
 #pragma once
 
 #include <map>
-#include <functional>
-
-#include "genome.h"
 
 struct innovation {
     size_t from;
@@ -20,6 +17,5 @@ private:
 public:
     innovations();
     size_t get_innovation(size_t from_node, size_t to_node, size_t identifier);
-    size_t compute_identifier(const genome& g);
     ~innovations();
 };

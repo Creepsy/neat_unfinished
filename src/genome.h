@@ -1,9 +1,9 @@
 #pragma once
 
-#include "innovations.h"
-
 #include <map>
 #include <vector>
+
+#include "innovations.h"
 
 struct connection
 {
@@ -15,8 +15,6 @@ struct connection
 };
 
 typedef double (*activation_t)(double);
-
-class innovations;
 
 class genome
 {
@@ -36,7 +34,6 @@ public:
     double compute_node_result(size_t node, const std::vector<double> &inputs);
     void mutate();
     void mutate_weights();
-    void split_connection(size_t from, size_t to);
-
-    friend innovations;
+    void split_connection(size_t from, size_t to, innovations &innos);
+    size_t compute_identifier();
 };

@@ -7,7 +7,8 @@ double sigmoid(double value);
 
 int main(int argc, char const *argv[])
 {
-    genome g = genome(4, 4, sigmoid);
+    innovations innos;
+    genome g = genome(4, 4, sigmoid, innos);
 
     auto outputs = g.run({1, 2, 3, 4});
     print_vector(std::cout, outputs) << std::endl;

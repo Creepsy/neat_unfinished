@@ -85,14 +85,30 @@ void genome::mutate_weights()
 {
 }
 
-void genome::split_connection(size_t from, size_t to)
+void genome::split_connection(size_t from, size_t to, innovations &innos)
 {
     // disable an existing connection and create a connected node at it's place
     size_t hidden_id = this->input_size + this->output_size + this->hidden_size;
     this->hidden_size++;
     this->disable_connection(from, to);
-    this->add_connection(from, hidden_id);
-    this->add_connection(hidden_id, to);
+    this->add_connection(from, hidden_id, innos);
+    this->add_connection(hidden_id, to, innos);
 }
 
 genome::~genome() {}
+
+size_t genome::compute_identifier()
+{
+    // compute a value uniquely representing the connections of the genome
+    size_t result = 0;
+    std::hash<size_t> hash;
+    for (auto &from_pair : this->connections)
+    {
+        for (auto &to_pair : from_pair.second)
+        {
+            result ^= hash(to_pair.second.inno);
+        }
+    }
+    std::cout << result << std::endl;
+    return result;
+}
