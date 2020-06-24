@@ -8,6 +8,10 @@ struct innovation {
     size_t identifier;
 };
 
+bool operator<(const innovation first, const innovation second) {
+    return first.identifier < second.identifier;
+}
+
 class innovations
 {
 private:
