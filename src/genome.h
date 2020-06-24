@@ -12,6 +12,8 @@ struct connection
     bool enabled = true;
 };
 
+double activation(double value);
+
 class genome
 {
 private:

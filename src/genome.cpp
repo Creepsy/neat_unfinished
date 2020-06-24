@@ -45,9 +45,12 @@ double genome::compute_node_result(size_t node, const std::vector<double> &input
         double inputs_summed = 0.0;
         for (auto n : node_connections)
         {
-            inputs_summed += n.second.weight * this->compute_node_result(n.second.from, inputs);
+            if (n.second.enabled)
+            {
+                inputs_summed += n.second.weight * this->compute_node_result(n.second.from, inputs);
+            }
         }
-        return inputs_summed;
+        return activation(inputs_summed);
     }
 }
 
