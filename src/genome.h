@@ -26,6 +26,6 @@ public:
     double compute_node_result(size_t node, const std::vector<double> &inputs);
     void mutate();
     void mutate_weights();
-    void split_connection(cosnt size_t& from, const size_t& to);
+    void split_connection(const size_t& from, const size_t& to);
     void connect(const size_t& first_node, const size_t& second_node);
 };
